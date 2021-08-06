@@ -8,13 +8,13 @@ const actionsRouter = require('./actions/actions-router')
 // Build your projects router in /api/projects/projects-router.js
 // Do NOT `server.listen()` inside this file!
 
-const notFound = (req, res, next) => {
+const notFound = (req, res) => {
     res.status(404).json({
         message: 'Page not found'
     })
 }
 
-const errHandler = (err, req, res, next) => {
+const errHandler = (err, req, res) => {
     const status = err.status || 500
     res.status(status).json({
         message: err.message

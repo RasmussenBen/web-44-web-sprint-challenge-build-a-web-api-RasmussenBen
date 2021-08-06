@@ -3,12 +3,13 @@ const Actions = require('./actions-model')
 const { verifyAction, verifyActionId } = require('./actions-middlware')
 const router = express.Router()
 
-router.get('/', (req, res, next) => {
-    Actions.get()
-        .then( actions => {
-            res.status(200).json(actions)
-        })
-        .catch(next)
+router.get('/', async (req, res, next) => {
+    try {
+        const action = await Actions.get()
+            res.status(200).json(action)
+    } catch (err) {
+            next(err)
+    }
 })
 
 router.get('/:id', verifyActionId, (req, res) => {
@@ -25,8 +26,8 @@ router.post('/', verifyAction, (req, res, next) => {
 
 router.put('/:id', verifyActionId, verifyAction, (req, res, next) => {
     Actions.update(req.params.id, {
-        id: req.id,
-        des: req.des,
+        project_id: req.project_id,
+        description: req.description,
         notes: req.notes,
         completed: req.completed
     })
