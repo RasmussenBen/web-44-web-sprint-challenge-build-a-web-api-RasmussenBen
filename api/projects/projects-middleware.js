@@ -10,17 +10,6 @@ function verifyProject (req, res, next) {
     next()
 }
 
-function verifyProjectComplete (req, res, next) {
-    const { name, des, complete } = req.body
-    if (!name || !name.trim() || !des || !des.trim() || !!complete) {
-        res.status(400).json({ message: "Both Name and Description fields are required"})
-    }
-    req.name = name.trim()
-    req.des = des.trim()
-    req.complete = complete
-    next()
-}
-
 async function verifyProjectId (req, res, next) {
     try {
         const specificProject = await Projects.get(req.params.id)
@@ -37,6 +26,5 @@ async function verifyProjectId (req, res, next) {
 
 module.exports = {
     verifyProject,
-    verifyProjectComplete,
     verifyProjectId
 }
