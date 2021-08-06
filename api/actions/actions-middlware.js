@@ -39,9 +39,7 @@ async function verifyActionId (req, res, next) {
         next()
     }
     catch (err) {
-        res.status(500).json({
-            message: "Error finding requested action"
-        })
+        res.status(500).json({ message: "Error finding requested action" })
     }
 }
 

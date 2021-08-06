@@ -12,8 +12,13 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.get('/:id', verifyActionId, (req, res) => {
-    res.json(req.action)
+router.get('/:id', verifyActionId, (req, res, next) => {
+    try {
+        res.json(req.action)
+    } 
+    catch (err) {
+            next(err)
+    }
 })
 
 router.post('/', verifyAction, (req, res, next) => {
