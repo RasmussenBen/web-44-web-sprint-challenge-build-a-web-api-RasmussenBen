@@ -1,31 +1,34 @@
 const Projects = require('./projects-model')
 
 function verifyProject (req, res, next) {
-    const { name, des, completed } = req.body
+    const { name, description, completed } = req.body
     if (!name || !name.trim()) {
         res.status(400).json({ message: "Name field is required"})
     }
-    else if (!des || !des.trim()) {
+    else if (!description || !description.trim()) {
         res.status(400).json({ message: "Description field is required"})
     }
     req.name = name.trim()
-    req.des = des.trim()
+    req.description = description.trim()
     req.completed = completed
     next()
 }
 
-async function verifyProjectId (req, res, next) {
+async function verifyProjectId(req, res, next) { 
     try {
         const { id } = req.params
-        const specificProject = await Projects.get(id)
-        if (!specificProject) {
-            res.status(404).json({ message: "Specific project not found"})
-        }
-        req.specificProject = specificProject
-        next()
+        const project = await Projects.get(id)
+        if (project) {
+            req.project = project
+                next()
+    } else {
+            next({
+                status: 404,
+                message: 'Specific project not found'
+    })
     }
-    catch (err) {
-        next(err)
+        } catch (err) {
+            next(err)
     }
 }
 

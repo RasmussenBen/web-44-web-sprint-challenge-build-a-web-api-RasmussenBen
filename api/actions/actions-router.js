@@ -1,6 +1,6 @@
 const express = require('express')
 const Actions = require('./actions-model')
-const { verifyAction, verifyActionId } = require('./actions-middleware')
+const { verifyAction, verifyActionId } = require('./actions-middlware')
 const router = express.Router()
 
 router.get('/', (req, res, next) => {

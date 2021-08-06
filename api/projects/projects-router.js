@@ -15,18 +15,24 @@ router.get('/:id', verifyProjectId, (req, res) => {
     res.json(req.project)
 })
 
-router.post('/', verifyProject, (req, res, next) => {
-    Projects.insert(req.body)
-        .then(newProject => {
-            res.status(201).json(newProject)
+router.post('/', verifyProject, async (req, res, next) => {
+    try {
+        const newProject = await Projects.insert({
+            name: req.name,
+            description: req.description,
+            completed: req.completed
         })
-        .catch(next)
+        res.status(201).json(newProject)
+    } 
+    catch (error) {
+        next(error)
+    }
 })
 
 router.put('/:id', verifyProjectId, verifyProject, (req, res, next) => {
     Projects.update(req.params.id, {
         name: req.name,
-        des: req.des,
+        description: req.description,
         completed: req.completed
     })
     .then(() => {
