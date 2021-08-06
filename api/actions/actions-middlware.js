@@ -4,17 +4,17 @@ async function verifyAction (req, res, next) {
     const { id, des, completed, notes } = req.body
     if (!id) {
         res.status(400).json({
-            message: 'Project ID is required'
+            message: 'Action ID is required'
         })
     }
     else if (!des || !des.trim()) {
         res.status(400).json({
-            message: 'Project description is required'
+            message: 'Action description is required'
         })
     }
     else if (!notes || !notes.trim()) {
         res.status(400).json({
-            message: 'Project notes are required'
+            message: 'Action notes are required'
         })
     }
     else {

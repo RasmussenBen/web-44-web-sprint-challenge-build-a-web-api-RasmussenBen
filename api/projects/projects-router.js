@@ -24,14 +24,18 @@ router.post('/', verifyProject, (req, res, next) => {
 })
 
 router.put('/:id', verifyProjectId, verifyProject, (req, res, next) => {
-    Projects.update(req.params.id, req.body)
-        .then(() => {
-            return Projects.get(req.params.id)
-        })
-        .then(project => {
-            res.json(project)
-        })
-        .catch(next)
+    Projects.update(req.params.id, {
+        name: req.name,
+        des: req.des,
+        completed: req.completed
+    })
+    .then(() => {
+        return Projects.get(req.params.id)
+    })
+    .then(project => {
+        res.json(project)
+    })
+    .catch(next)
 })
 
 router.delete('/:id', verifyProjectId, async (req, res, next) => {
@@ -42,12 +46,6 @@ router.delete('/:id', verifyProjectId, async (req, res, next) => {
     catch(err) {
         next(err)
     }
-})
-
-router.use((err, req, res, next) => {
-    res.status(err.status || 500).json({
-        message: err.message
-    })
 })
 
 module.exports = router
